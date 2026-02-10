@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { useSessionStore } from "@/state/session";
 
 export function Header() {
-  const { user } = useSessionStore()
+  const { user, resetUser } = useSessionStore()
   return (
     <header className="flex w-full max-h-24 justify-between p-4 bg-primary-foreground shadow-sm">
       <SidebarTrigger className="hover:bg-transparent" />
@@ -34,7 +34,7 @@ export function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="start">
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => resetUser()}>
                   Log out
                   <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>

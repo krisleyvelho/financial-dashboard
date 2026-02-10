@@ -1,11 +1,5 @@
+import { User } from '@/lib/mocks/generators'
 import { create } from 'zustand'
-
-export type User = {
-  id: string
-  name: string
-  type: 'admin' | 'user'
-}
-
 
 interface SessionStore {
   user: User | undefined
