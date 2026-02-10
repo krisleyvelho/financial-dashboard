@@ -26,7 +26,7 @@ const RoutesButtons = () => {
           <Link key={path} href={path} className="flex justify-between w-full px-4">
             {label} <ArrowUpRight />
           </Link>
-          </DefaultSidebarButton>
+        </DefaultSidebarButton>
       ))}
     </>
   )
@@ -34,24 +34,19 @@ const RoutesButtons = () => {
 
 
 export function DefaultSidebar() {
-  const {user,resetUser } = useSessionStore()
+  const { user, resetUser } = useSessionStore()
   return (
-    <>
-      <Sidebar className="bg-red-300">
-        <SidebarHeader className="flex justify-center items-center">
-          <Image src="/images/logo.png" alt="Logo" width={100} height={100} />
-        </SidebarHeader>
-        <SidebarContent className="gap-1 justify-start">
-          <RoutesButtons />
-          <DefaultSidebarButton>
-            <Button onClick={resetUser} variant={'ghost'} className="w-full hover:bg-red-300/40">Logout</Button>
-          </DefaultSidebarButton>
-        </SidebarContent>
-        <SidebarFooter />
-      </Sidebar>
-      <div className="fixed p-2 hover:bg-slate-300/30 rounded-lg">
-        <SidebarTrigger className="hover:bg-transparent" />
-      </div>
-    </>
+    <Sidebar className="bg-red-300">
+      <SidebarHeader className="flex justify-center items-center">
+        <Image src="/images/logo.png" alt="Logo" width={100} height={100} />
+      </SidebarHeader>
+      <SidebarContent className="gap-1 justify-start">
+        <RoutesButtons />
+        <DefaultSidebarButton>
+          <Button onClick={resetUser} variant={'ghost'} className="w-full hover:bg-red-300/40">Logout</Button>
+        </DefaultSidebarButton>
+      </SidebarContent>
+      <SidebarFooter />
+    </Sidebar>
   )
 }

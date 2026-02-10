@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <div className='flex flex-col justify-between items-center h-full gap-4 md:gap-24'>
       <div className='flex flex-col items-center justify-center'>
-        <Image src="/images/logo.png" alt="Logo" width={200} height={200} style={{mixBlendMode: 'multiply'}}/> 
+        <Image src="/images/logo.png" alt="Logo" width={200} height={200} /> 
         <div className="text-center">
           <h1 className="my-4 text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
             Financial Dashboard
