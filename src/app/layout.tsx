@@ -30,7 +30,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={cn(inter.className, 'bg-gradient-to-br from-slate-50 to-slate-100')}>

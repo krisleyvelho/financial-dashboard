@@ -7,6 +7,8 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { useSessionStore } from '@/state/session'
 import { redirect, usePathname } from 'next/navigation'
+import { DashboardSkeleton } from './_components/skeleton'
+import { useTheme } from '@/hooks/use-theme'
 
 async function initMocks() {
   if (typeof window !== 'undefined') {
@@ -18,6 +20,7 @@ async function initMocks() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const { handleTheme } = useTheme();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -34,6 +37,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [mswReady, setMswReady] = useState(false)
 
   useEffect(() => {
+    handleTheme();
     initMocks()
       .then(() => {
         console.log('✅ MSW initialized') // Log para debug
@@ -48,13 +52,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
   if (!mswReady) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <div className="text-lg">Iniciando mocks...</div>
+        <DashboardSkeleton />
       </div>
     )
   }
 
   return (
-
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={false}>
         {/* <SessionProvider> */}
