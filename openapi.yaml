@@ -1,0 +1,564 @@
+openapi: 3.0.0
+info:
+  title: Financial Dashboard API
+  version: 1.0.0
+  description: API para dashboard financeiro com análise de transações, investimentos e insights geográficos
+
+servers:
+  - url: /api
+    description: API local
+
+tags:
+  - name: dashboard
+    description: Endpoints do dashboard principal
+  - name: transactions
+    description: Gerenciamento de transações
+  - name: investments
+    description: Portfólio de investimentos
+  - name: analytics
+    description: Análises e insights
+  - name: geographic
+    description: Análise geográfica de gastos
+
+paths:
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      summary: Resumo financeiro do dashboard
+      tags:
+        - dashboard
+      responses:
+        '200':
+          description: Dados resumidos do dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardSummary'
+        '500':
+          description: Erro interno do servidor
+
+  /transactions:
+    get:
+      operationId: getTransactions
+      summary: Lista de transações
+      tags:
+        - transactions
+      parameters:
+        - name: period
+          in: query
+          description: Período das transações
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 1y, all]
+            default: 30d
+        - name: category
+          in: query
+          description: Filtro por categoria
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Tipo de transação
+          schema:
+            type: string
+            enum: [income, expense]
+        - name: page
+          in: query
+          description: Número da página
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: perPage
+          in: query
+          description: Itens por página
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: Lista de transações
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse'
+
+  /transactions/{id}:
+    get:
+      operationId: getTransactionById
+      summary: Detalhes de uma transação
+      tags:
+        - transactions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes da transação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Transação não encontrada
+
+  /transactions/stats:
+    get:
+      operationId: getTransactionStats
+      summary: Estatísticas de transações
+      tags:
+        - transactions
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 1y]
+            default: 30d
+      responses:
+        '200':
+          description: Estatísticas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionStats'
+
+  /investments:
+    get:
+      operationId: getInvestments
+      summary: Portfólio de investimentos
+      tags:
+        - investments
+      responses:
+        '200':
+          description: Lista de investimentos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentResponse'
+
+  /investments/performance:
+    get:
+      operationId: getInvestmentPerformance
+      summary: Performance dos investimentos
+      tags:
+        - investments
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [1m, 3m, 6m, 1y, all]
+            default: 1y
+      responses:
+        '200':
+          description: Dados de performance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentPerformance'
+
+  /analytics/spending-trends:
+    get:
+      operationId: getSpendingTrends
+      summary: Tendências de gastos
+      tags:
+        - analytics
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 90d
+      responses:
+        '200':
+          description: Dados de tendência
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingTrends'
+
+  /analytics/category-breakdown:
+    get:
+      operationId: getCategoryBreakdown
+      summary: Distribuição por categoria
+      tags:
+        - analytics
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 30d
+      responses:
+        '200':
+          description: Breakdown de categorias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryBreakdown'
+
+  /geographic/heatmap:
+    get:
+      operationId: getGeographicHeatmap
+      summary: Mapa de calor de gastos
+      tags:
+        - geographic
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 90d
+      responses:
+        '200':
+          description: Dados para mapa de calor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeographicHeatmap'
+
+  /geographic/top-locations:
+    get:
+      operationId: getTopLocations
+      summary: Locais com mais gastos
+      tags:
+        - geographic
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 30d
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+      responses:
+        '200':
+          description: Top localizações
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopLocations'
+
+components:
+  schemas:
+    DashboardSummary:
+      type: object
+      required:
+        - totalBalance
+        - monthlyIncome
+        - monthlyExpenses
+        - investments
+      properties:
+        totalBalance:
+          type: number
+          format: float
+          example: 45230.50
+        monthlyIncome:
+          type: number
+          format: float
+          example: 8500.00
+        monthlyExpenses:
+          type: number
+          format: float
+          example: 3420.75
+        investments:
+          type: number
+          format: float
+          example: 15000.00
+        savingsRate:
+          type: number
+          format: float
+          example: 0.60
+          description: Taxa de poupança (0-1)
+        cashFlow:
+          type: number
+          format: float
+          example: 5079.25
+          description: Fluxo de caixa mensal (income - expenses)
+
+    Transaction:
+      type: object
+      required:
+        - id
+        - date
+        - description
+        - amount
+        - category
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        date:
+          type: string
+          format: date-time
+          example: "2024-02-06T10:30:00Z"
+        description:
+          type: string
+          example: "Supermercado ABC"
+        amount:
+          type: number
+          format: float
+          example: 250.75
+        category:
+          type: string
+          enum: [food, transport, housing, entertainment, health, education, shopping, salary, investment, other]
+        type:
+          type: string
+          enum: [income, expense]
+        merchant:
+          type: string
+          example: "Supermercado ABC"
+        location:
+          $ref: '#/components/schemas/Location'
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["recurring", "essential"]
+        notes:
+          type: string
+
+    Location:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: float
+          example: -28.5305
+        longitude:
+          type: number
+          format: float
+          example: -49.4962
+        address:
+          type: string
+          example: "Rua Principal, 123, Orleans, SC"
+        city:
+          type: string
+          example: "Orleans"
+        state:
+          type: string
+          example: "SC"
+
+    TransactionListResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        meta:
+          type: object
+          required:
+            - total
+            - page
+            - perPage
+          properties:
+            total:
+              type: integer
+              example: 150
+            page:
+              type: integer
+              example: 1
+            perPage:
+              type: integer
+              example: 10
+            totalPages:
+              type: integer
+              example: 15
+
+    TransactionStats:
+      type: object
+      properties:
+        totalIncome:
+          type: number
+          format: float
+        totalExpenses:
+          type: number
+          format: float
+        averageTransaction:
+          type: number
+          format: float
+        largestExpense:
+          $ref: '#/components/schemas/Transaction'
+        largestIncome:
+          $ref: '#/components/schemas/Transaction'
+        topCategory:
+          type: string
+        transactionCount:
+          type: integer
+
+    Investment:
+      type: object
+      required:
+        - id
+        - name
+        - type
+        - value
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Ações PETR4"
+        type:
+          type: string
+          enum: [stocks, crypto, bonds, real-estate, funds, savings]
+        value:
+          type: number
+          format: float
+          example: 5000.00
+        quantity:
+          type: number
+          format: float
+          example: 100
+        averagePrice:
+          type: number
+          format: float
+          example: 50.00
+        currentPrice:
+          type: number
+          format: float
+          example: 55.00
+        profit:
+          type: number
+          format: float
+          example: 500.00
+        profitPercentage:
+          type: number
+          format: float
+          example: 10.0
+        lastUpdate:
+          type: string
+          format: date-time
+
+    InvestmentResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float
+        totalProfit:
+          type: number
+          format: float
+        profitPercentage:
+          type: number
+          format: float
+        investments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Investment'
+        distribution:
+          type: object
+          additionalProperties:
+            type: number
+
+    InvestmentPerformance:
+      type: object
+      properties:
+        period:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              value:
+                type: number
+              profit:
+                type: number
+
+    SpendingTrends:
+      type: object
+      properties:
+        period:
+          type: string
+        trends:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              amount:
+                type: number
+              category:
+                type: string
+
+    CategoryBreakdown:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+              amount:
+                type: number
+              percentage:
+                type: number
+              transactionCount:
+                type: integer
+
+    GeographicHeatmap:
+      type: object
+      properties:
+        points:
+          type: array
+          items:
+            type: object
+            properties:
+              latitude:
+                type: number
+              longitude:
+                type: number
+              amount:
+                type: number
+              intensity:
+                type: number
+                description: Intensidade normalizada (0-1)
+
+    TopLocations:
+      type: object
+      properties:
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              merchant:
+                type: string
+              location:
+                $ref: '#/components/schemas/Location'
+              totalAmount:
+                type: number
+              transactionCount:
+                type: integer
+              averageAmount:
+                type: number
