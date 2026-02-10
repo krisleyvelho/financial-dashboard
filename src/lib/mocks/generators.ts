@@ -34,9 +34,10 @@ const INVESTMENT_TYPES = [
   'savings',
 ] as const
 
-// Coordenadas base de Orleans, SC para simular localidades próximas
-const BASE_LAT = -28.3547
-const BASE_LNG = -49.2897
+// Coordenadas base de Florianópolis, SC para simular localidades próximas
+export const BASE_LAT = -27.5969
+export const BASE_LNG = -48.5495
+
 
 export function generateLocation(): Location {
   // Gera coordenadas próximas a Orleans, SC
@@ -48,11 +49,10 @@ export function generateLocation(): Location {
     longitude: BASE_LNG + lngOffset,
     address: faker.location.streetAddress(),
     city: faker.helpers.arrayElement([
-      'Orleans',
-      'Grão Pará',
-      'São Ludgero',
-      'Braço do Norte',
-      'Tubarão',
+      'São José',
+      'Palhoça',
+      'Biguaçu',
+      'Florianópolis',
     ]),
     state: 'SC',
   }

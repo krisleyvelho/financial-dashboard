@@ -60,9 +60,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={false}>
-        {/* <SessionProvider> */}
+        <SessionProvider>
           <NuqsAdapter>{children}</NuqsAdapter>
-        {/* </SessionProvider> */}
+        </SessionProvider>
       </SidebarProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
