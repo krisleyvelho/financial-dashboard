@@ -9,6 +9,13 @@ import type {
   GeographicHeatmap,
 } from '../api/generated/models'
 
+
+export type User = {
+  id: string
+  name: string
+  type: 'admin' | 'user'
+}
+
 const CATEGORIES = [
   'food',
   'transport',
@@ -38,9 +45,19 @@ const INVESTMENT_TYPES = [
 export const BASE_LAT = -27.5969
 export const BASE_LNG = -48.5495
 
+export function generateUser() {
+  const names = ["Lucas", "Ana", "Marcos", "Beatriz", "Rafael"]
+  const types: User['type'][] = ["admin", "user"]
+
+  return {
+    name: names[Math.floor(Math.random() * names.length)],
+    type: types[Math.floor(Math.random() * types.length)],
+  }
+}
+
 
 export function generateLocation(): Location {
-  // Gera coordenadas próximas a Orleans, SC
+  // Gera coordenadas próximas a Florianópolis, SC	
   const latOffset = (Math.random() - 0.5) * 0.1
   const lngOffset = (Math.random() - 0.5) * 0.1
 
