@@ -4,8 +4,7 @@ import { Suspense } from 'react'
 import { ArrowUpIcon, ArrowDownIcon, TrendingUp, Wallet, CreditCard, PiggyBank } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils/formatters'
 import { useGetDashboardSummary, useGetDashboardSummarySuspense } from '@/lib/api/generated/dashboard/dashboard'
-import {LineBarAreaComposedChart} from './_components/chart'
-import { RechartsDevtoolsContext, RechartsDevtoolsPortal } from '@recharts/devtools'
+import {DashboardChart} from './_components/DashboardChart'
 
 export default function DashboardPage() {
   return (
@@ -87,10 +86,7 @@ function DashboardContent() {
           Tendência de Gastos
         </h3>
         <div className="flex h-64 items-center justify-center text-slate-400">
-
-          <LineBarAreaComposedChart />
-
-          {/* <p>Gráfico será implementado aqui usando Recharts</p> */}
+          <DashboardChart />
         </div>
       </div>
     </div>

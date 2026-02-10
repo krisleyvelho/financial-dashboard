@@ -9,6 +9,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import { PageTitle } from '../_components/pageTitle'
+import { ToggleTheme } from '../_components/toggleTheme'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <Providers>
       <DefaultSidebar />
+      <ToggleTheme />
       <SidebarGhost>
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 w-full ">
           <div className="container mx-auto px-4 py-16">
