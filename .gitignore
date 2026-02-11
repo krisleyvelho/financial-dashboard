@@ -37,7 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 # MSW
-/public/mockServiceWorker.js
+#/public/mockServiceWorker.js
 
 # Orval generated
 /src/lib/api/generated
