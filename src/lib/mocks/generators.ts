@@ -16,7 +16,7 @@ export type User = {
   type: 'admin' | 'user'
 }
 
-const CATEGORIES = [
+export const CATEGORIES = [
   'food',
   'transport',
   'housing',
@@ -273,11 +273,11 @@ export function generateGeographicHeatmap(transactions: Transaction[]): Geograph
     (acc, t) => {
       if (!t.location) return acc
 
-      const key = `${t.location.latitude.toFixed(3)},${t.location.longitude.toFixed(3)}`
+      const key = `${(t.location.latitude ?? 0).toFixed(3)},${(t.location.longitude ?? 0).toFixed(3)}` 
       if (!acc[key]) {
         acc[key] = {
-          latitude: t.location.latitude,
-          longitude: t.location.longitude,
+          latitude: t.location.latitude ?? 0,
+          longitude: t.location.longitude ?? 0,
           amount: 0,
         }
       }

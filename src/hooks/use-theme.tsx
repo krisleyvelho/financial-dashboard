@@ -28,6 +28,7 @@ export function useTheme() {
 
   useEffect(() => {
     handleTheme()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   const toggleTheme = () => {

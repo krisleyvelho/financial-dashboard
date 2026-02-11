@@ -1,6 +1,6 @@
 'use client'
 import { Button } from "@/components/ui/button";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenuItem, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { MappedRoutes } from "@/lib/utils";
 import { useSessionStore } from "@/state/session";
 import { ArrowUpRight } from "lucide-react";
@@ -18,7 +18,6 @@ const DefaultSidebarButton = ({ children }: { children: React.ReactNode }) => {
 }
 
 const RoutesButtons = () => {
-  const { setOpen: setSidebarOpen, isMobile, setOpenMobile } = useSidebar()
   return (
     <>
       {MappedRoutes.map(({ path, label }) => (
@@ -34,7 +33,7 @@ const RoutesButtons = () => {
 
 
 export function DefaultSidebar() {
-  const { user, resetUser } = useSessionStore()
+  const { resetUser } = useSessionStore()
   return (
     <Sidebar className="bg-red-300">
       <SidebarHeader className="flex justify-center items-center">

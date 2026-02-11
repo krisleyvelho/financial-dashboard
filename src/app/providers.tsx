@@ -47,6 +47,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         console.error('❌ MSW initialization failed:', error)
         setMswReady(true) // Mesmo com erro, libera a UI
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!mswReady) {
@@ -71,7 +72,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const { user, setUser } = useSessionStore()
+  const { user } = useSessionStore()
   const pathName = usePathname();
 
   const session = useMemo(() => ({ user }), [user]);

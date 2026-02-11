@@ -42,7 +42,7 @@ export const customInstance = <T>(
     cancelToken: source.token,
   }).then(({ data }) => data)
 
-  // @ts-ignore - Necessário para cancelamento de queries
+  // @ts-expect-error - CancelToken.source() não retorna um tipo de Promise
   promise.cancel = () => {
     source.cancel('Query was cancelled')
   }

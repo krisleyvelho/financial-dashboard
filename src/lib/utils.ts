@@ -11,5 +11,5 @@ export const MappedRoutes  = [
   { path: '/in/transactions', label: 'Transações', description: 'Histórico detalhado de movimentações' },
   { path: '/in/investments', label: 'Investimentos', description: 'Acompanhe seu portfólio' },
   { path: '/in/geographic', label: 'Análise Geográfica', description: 'Onde você mais gasta' },
-  { path: '/in/about-project', label: 'Sobre esse projeto' },
+  { path: '/in/about-project', label: 'Sobre esse projeto', description: "" },
 ] as const

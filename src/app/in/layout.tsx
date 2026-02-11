@@ -1,18 +1,10 @@
-import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { DefaultSidebar } from '../_components/defaultSidebar'
 import { SidebarGhost } from '../_components/sidebarGhost'
 import '../globals.css'
 import { Providers } from '../providers'
-import { ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { usePathname } from 'next/navigation'
 import { PageTitle } from '../_components/pageTitle'
-import { ToggleTheme } from '../_components/toggleTheme'
 import { Header } from '../_components/header'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Financial Dashboard - Gestão Financeira Inteligente',

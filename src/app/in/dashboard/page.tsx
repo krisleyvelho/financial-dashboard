@@ -3,7 +3,7 @@
 import { Suspense } from 'react'
 import { ArrowUpIcon, ArrowDownIcon, TrendingUp, Wallet, CreditCard, PiggyBank } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils/formatters'
-import { useGetDashboardSummary, useGetDashboardSummarySuspense } from '@/lib/api/generated/dashboard/dashboard'
+import { useGetDashboardSummarySuspense } from '@/lib/api/generated/dashboard/dashboard'
 import {DashboardChart} from './_components/DashboardChart'
 
 export default function DashboardPage() {
@@ -19,7 +19,6 @@ function DashboardContent() {
 
   return (
     <div className="space-y-6">
-      {/* Cards de Resumo */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <SummaryCard
           title="Saldo Total"
@@ -46,8 +45,6 @@ function DashboardContent() {
           trend={{ value: 15.7, isPositive: true }}
         />
       </div>
-
-      {/* Indicadores */}
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
@@ -57,7 +54,7 @@ function DashboardContent() {
             <CreditCard className="h-5 w-5 text-slate-500" />
           </div>
           <div className="text-3xl font-bold text-green-600">
-            {formatCurrency(data.cashFlow)}
+            {formatCurrency(data.cashFlow ?? 0)}
           </div>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
             Receita menos despesas do mês
@@ -72,15 +69,13 @@ function DashboardContent() {
             <PiggyBank className="h-5 w-5 text-slate-500" />
           </div>
           <div className="text-3xl font-bold text-blue-600">
-            {(data.savingsRate * 100).toFixed(1)}%
+            {(data.savingsRate ?? 0 * 100).toFixed(1)}%
           </div>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
             Percentual economizado mensalmente
           </p>
         </div>
       </div>
-
-      {/* Placeholder para gráficos */}
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-slate-50">
           Tendência de Gastos
