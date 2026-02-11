@@ -44,7 +44,7 @@ export function FeaturesList({ locations, selectedMerchant, onClick }: { locatio
         <RFeature
           key={merchant}
           geometry={geometry}
-          properties={properties}
+          properties={properties as unknown as Record<string, unknown>}
           onClick={handleFeatureClick(merchant)}
         >
           <ROverlay>

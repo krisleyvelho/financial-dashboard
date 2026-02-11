@@ -25,7 +25,11 @@ export default function LoginPage() {
     formData: FormData
   ): Promise<LoginState> {
     const name = formData.get("name")
-    const type = formData.get("type")
+    const type = formData.get("type") as User['type']
+
+    if(typeof name !== 'string' || typeof type !== 'string') {
+      return { success: false, message: "Houve um erro ao gerar o usuário." }
+    }
   
     if (!name || !type) {
       return { success: false, message: "Gere um usuário antes de logar." }

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run generate:api && next build",
+    "build": "pnpm run generate:api && next build",
     "start": "next start",
     "lint": "next lint",
     "generate:api": "orval",
@@ -37,6 +37,7 @@
     "lucide-react": "^0.468.0",
     "next": "^15.1.3",
     "nuqs": "^2.2.3",
+    "ol": "10.6.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^3.7",

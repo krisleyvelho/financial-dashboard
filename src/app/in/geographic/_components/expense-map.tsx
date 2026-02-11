@@ -3,11 +3,11 @@
 import type { Extent } from 'ol/extent'
 import { containsCoordinate } from 'ol/extent'
 import type MapBrowserEvent from 'ol/MapBrowserEvent'
+import type OlMap from 'ol/Map'
 import 'ol/ol.css'
 import { fromLonLat } from 'ol/proj'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import type { RMapRef } from 'rlayers'
 import { RControl, RLayerVector, RMap, ROSM, RStyle } from 'rlayers'
 
 import type { TopLocationsLocationsItem } from '@/lib/api/generated/models'
@@ -44,11 +44,11 @@ export function ExpenseMap({
   className,
   onVisibleFeaturesChange,
 }: ExpenseMapProps) {
-  const mapRef = useRef<RMapRef>(null)
+  const mapRef = useRef<RMap | null>(null)
   const [selectedMerchant, setSelectedMerchant] = useState<string | null>(null)
 
   const notifyVisibleFeatures = useCallback(
-    (map: ReturnType<NonNullable<RMapRef>['getMap']>) => {
+    (map: OlMap) => {
       if (!map || !onVisibleFeaturesChange) return
 
       const extent: Extent = map.getView().calculateExtent(map.getSize())
@@ -75,18 +75,18 @@ export function ExpenseMap({
   )
 
   useEffect(() => {
-    const map = mapRef.current?.getMap?.()
+    const map = mapRef.current?.ol
     if (map) notifyVisibleFeatures(map)
   }, [locations, notifyVisibleFeatures])
 
   const handleMoveEnd = useCallback(
-    function (this: unknown, e: MapBrowserEvent<UIEvent>) {
+    function (this: unknown, e: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>) {
       notifyVisibleFeatures(e.map)
     },
     [notifyVisibleFeatures]
   )
 
-  const handleMapClick = useCallback(function (this: unknown, e: MapBrowserEvent<UIEvent>) {
+  const handleMapClick = useCallback(function (this: unknown, e: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>) {
     const hit = e.map.hasFeatureAtPixel(e.pixel)
     if (!hit) setSelectedMerchant(null)
   }, [])

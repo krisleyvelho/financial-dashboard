@@ -19,8 +19,8 @@ export default defineConfig({
         query: {
           useQuery: true,
           useSuspenseQuery: true,
-          useInfinite: true,
-          useInfiniteQueryParam: 'page',
+        /*   useInfinite: true,  
+          useInfiniteQueryParam: 'page', */
           options: {
             staleTime: 300000, // 5 minutos
             refetchOnWindowFocus: false,

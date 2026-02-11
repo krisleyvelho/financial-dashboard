@@ -1,12 +1,11 @@
 import { MappedRoutes } from '@/lib/utils'
-import { ArrowRight, MapPin, PieChart, TrendingUp, Wallet } from 'lucide-react'
+import { ArrowRight, Wallet } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function HomePage() {
   const test: typeof MappedRoutes[number]['path'][] = ['/in/dashboard','/in/transactions','/in/investments','/in/geographic']
   const cardsLists = MappedRoutes.filter((route) => test.includes(route.path))
-  // const cards = MappedRoutes.filter((route) => route.path !== '/in')
   return (
     <div className='flex flex-col justify-between items-center h-full gap-4 md:gap-24'>
       <div className='flex flex-col items-center justify-center'>

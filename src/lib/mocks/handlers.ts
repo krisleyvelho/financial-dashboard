@@ -137,7 +137,7 @@ export const handlers = [
 
     const investments = Array.from({ length: 8 }, generateInvestment)
     const total = investments.reduce((sum, inv) => sum + inv.value, 0)
-    const totalProfit = investments.reduce((sum, inv) => sum + inv.profit, 0)
+    const totalProfit = investments.reduce((sum, inv) => sum + inv.profit!, 0)
     const profitPercentage = (totalProfit / (total - totalProfit)) * 100
 
     const distribution = investments.reduce(
@@ -327,7 +327,7 @@ export const handlers = [
         string,
         {
           merchant: string
-          location: any
+          location: unknown
           totalAmount: number
           transactionCount: number
           amounts: number[]
@@ -345,7 +345,7 @@ export const handlers = [
           group.amounts.reduce((sum, a) => sum + a, 0) / group.amounts.length,
       }))
       .sort((a, b) => b.totalAmount - a.totalAmount)
-      .slice(0, limit)
+      .slice(0, limit) as TopLocations['locations']
 
     const response: TopLocations = {
       locations,

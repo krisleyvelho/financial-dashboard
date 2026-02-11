@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useState } from 'react'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
-import { MapPin, MoveHorizontal, TrendingDown } from 'lucide-react'
+import { MapPin, MoveHorizontal } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils/formatters'
 import { useGetTopLocationsSuspense } from '@/lib/api/generated/geographic/geographic'
 import { FeatureProperties } from './_components/expense-map'
